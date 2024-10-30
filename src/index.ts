@@ -2,20 +2,15 @@ import { Hono } from "hono";
 import { extractText, getDocumentProxy } from "unpdf";
 
 interface QueueMessage {
-  attempts: number;
-  body: {
-    account: string;
-    bucket: string;
-    eventTime: string;
-    action: string;
-    object: {
-      key: string;
-      size: number;
-      eTag: string;
-    };
+  account: string;
+  bucket: string;
+  eventTime: string;
+  action: string;
+  object: {
+    key: string;
+    size: number;
+    eTag: string;
   };
-  timestamp: Date;
-  id: string;
 }
 
 const app = new Hono<{ Bindings: CloudflareBindings }>();
@@ -35,7 +30,7 @@ const sampleMessages: MessageBatch<QueueMessage> = {
           eTag: "some-etag",
         },
       },
-      timestamp: new Date("2024-11-08T12:33:45.399Z"),
+      timestamp: "2024-11-08T12:33:45.399Z",
       id: "123456abcdef",
     },
   ],
