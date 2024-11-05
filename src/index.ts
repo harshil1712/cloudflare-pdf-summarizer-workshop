@@ -52,7 +52,7 @@ app.post("/api/upload", async (c) => {
   try {
     // Upload to R2
 
-    return c.json({ message: "File uploaded successfully" });
+    return c.json({ message: "File uploaded successfully" }, 201);
   } catch (error) {
     console.error("Error uploading file:", error);
     return c.json({ message: "Error uploading file" }, 500);
