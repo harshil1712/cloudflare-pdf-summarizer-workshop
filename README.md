@@ -14,7 +14,7 @@ The application allows users to upload a PDF file to Cloudflare R2. Once the fil
 ## Prerequisites
 
 - A [Cloudflare account](https://dash.cloudflare.com/sign-up)
-  - Make sure you have access to [Cloudflare R2]() and [Cloudflare Queues]()
+  - Make sure you have access to Cloudflare R2 and Cloudflare Queues
 - [Node.js](https://nodejs.org) and [npm](https://npmjs.com) installed
 
 
@@ -23,22 +23,27 @@ The application allows users to upload a PDF file to Cloudflare R2. Once the fil
 1. Clone the repository
 
 ```bash
-git clone https://github.com/harshil1712/
+git clone https://github.com/harshil1712/cloudflare-pdf-summarizer-workshop.git
 ```
 
 2. Install the dependencies
 
 ```bash
+cd cloudflare-pdf-summarizer-workshop
 npm install
 ```
 
-3. Run the application
+3. Update `name` in `wrangler.toml`
+- Replace `<FIRST_NAME+LAST_NAME>` with your first name and last name.
+> When deploying in the same organisation, this will ensure that there are no conflicts.
+
+4. Run the application
 
 ```bash
 npm run dev
 ```
 
-4. Open your browser and navigate to [http://localhost:8787](http://localhost:8787)
+5. Open your browser and navigate to [http://localhost:8787](http://localhost:8787)
 
 ## Steps
 
@@ -53,7 +58,9 @@ Start the development server and navigate to [http://localhost:8787](http://loca
 
 ### Step 2: Create an R2 Bucket
 
-1. Create an R2 bucket using the Cloudflare dashboard or using the [Wrangler CLI]().
+1. Create an R2 bucket using the Cloudflare dashboard or using the [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/).
+
+> NOTE: Use the format `firstname-lastname-bucket` (replace `firstname-lastname` with your first and last name, respectively) to name your R2 bucket. This will prevent conflicts when creating buckets with the same name.
 
 <details>
 <summary>Hint</summary>
@@ -63,16 +70,31 @@ Start the development server and navigate to [http://localhost:8787](http://loca
 
 </details>
 
-2. Add the binding to the `wrangler.toml` file.
-3. Update `worker-configuration.ts` with the R2 type.
-4. Update the `/api/upload` endpoint in `src/index.ts` to handle file uploads.
+1. Add the binding to the `wrangler.toml` file.
+2. Update the types with the command `npm run cf-typegen`.
+3. Update the `/api/upload` endpoint in `src/index.ts` to handle file uploads.
+
+<details>
+<summary>Hint</summary>
+
+- Use the <a href="https://developers.cloudflare.com/r2/api/workers/workers-api-usage/">Workers API</a>
+
+</details>
+
+- To test this, start the development server:
+
+```bash
+npm run dev
+```
 
 ### Step 3: Create a Queue
 
-1. Create a queue using the using the [Wrangler CLI](https://developers.cloudflare.com/queues/get-started/#2-create-a-queue).
+1. Create a queue using the [Wrangler CLI](https://developers.cloudflare.com/queues/get-started/#2-create-a-queue).
+
+> NOTE: Use the format `firstname-lastname-queue` (replace `firstname-lastname` with your first and last name, respectively) to name your Queue. This will prevent conflicts when creating Queues with the same name.
 
 ```bash
-npx wrangler queues create <queue-name>
+npx wrangler queues create firstname-lastname-queue
 ```
 
 2. Add the queue consumer binding to the `wrangler.toml` file.
@@ -90,10 +112,16 @@ You can do this on the [Cloudflare R2 dashboard](https://developers.cloudflare.c
 ### Step 5: Enable Workers AI
 
 1. Update the `wrangler.toml` file to add the Workers AI binding.
-2. Update the `handleWorkshopQueue` function in `src/index.ts` to use Wokres AI to summarize the content of the PDF file.
+2. Update the `handleWorkshopQueue` function in `src/index.ts` to use Workers AI to summarize the content of the PDF file.
 3. Add the functionality to store the summary back in R2 as a text file.
 
 > For development purposes, use the `/api/mock` endpoint to simulate event notifications. Update `sampleMessages` with the name of the PDF file you uploaded to local instance of R2.
+
+- To test this, start the development server and make a `GET` request to `http://localhost:8787/api/mock`
+
+```bash
+npm run dev
+```
 
 ### Step 6: Handle event notifications
 
@@ -107,7 +135,7 @@ Deploy the application to Cloudflare Workers using the following command:
 npm run deploy
 ```
 
-Navigate to the deployed application and upload a PDF file. You should see the summary of the PDF file in the UI.
+Navigate to the deployed application and upload a PDF file. You should see the uploaded PDF file in the UI. If you refresh the page, you should see the 
 
 ## Next Steps
 

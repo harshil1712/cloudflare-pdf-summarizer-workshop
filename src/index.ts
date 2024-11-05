@@ -15,7 +15,7 @@ interface QueueMessage {
 
 const app = new Hono<{ Bindings: CloudflareBindings }>();
 
-const sampleMessages: MessageBatch<QueueMessage> = {
+const sampleMessages: MessageBatch<QueueMessage> | any = {
   messages: [
     {
       attempts: 1,
@@ -25,7 +25,7 @@ const sampleMessages: MessageBatch<QueueMessage> = {
         eventTime: "2024-11-08T12:33:45.296Z",
         action: "PutObject",
         object: {
-          key: "2305.20050v1.pdf",
+          key: "Workshop PDF.pdf",
           size: 4384742,
           eTag: "some-etag",
         },
@@ -40,6 +40,13 @@ app.get("/", (c) => {
   return c.text("Hello Nordic DevOps Day!");
 });
 
+app.get("/api/files", async (c) => {
+  const files = await c.env.MY_BUCKET.list();
+  return c.json(files);
+});
+
+const clients = new Set<Response>();
+
 app.post("/api/upload", async (c) => {
   const formData = await c.req.formData();
   const file = formData.get("pdfFile") as File;
@@ -52,7 +59,7 @@ app.post("/api/upload", async (c) => {
   try {
     // Upload to R2
     await c.env.MY_BUCKET.put(file.name, file);
-    return c.json({ message: "File uploaded successfully" });
+    return c.json({ message: "File uploaded successfully" }, 201);
   } catch (error) {
     console.error("Error uploading file:", error);
     return c.json({ message: "Error uploading file" }, 500);
