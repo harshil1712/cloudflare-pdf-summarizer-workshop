@@ -15,7 +15,7 @@ interface QueueMessage {
 
 const app = new Hono<{ Bindings: CloudflareBindings }>();
 
-const sampleMessages: MessageBatch<QueueMessage> = {
+const sampleMessages: MessageBatch<QueueMessage> | any = {
   messages: [
     {
       attempts: 1,
@@ -38,6 +38,11 @@ const sampleMessages: MessageBatch<QueueMessage> = {
 
 app.get("/", (c) => {
   return c.text("Hello Nordic DevOps Day!");
+});
+
+app.get("/api/files", async (c) => {
+  const files = await c.env.MY_BUCKET.list();
+  return c.json(files);
 });
 
 app.post("/api/upload", async (c) => {

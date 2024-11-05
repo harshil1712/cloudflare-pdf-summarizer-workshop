@@ -29,6 +29,7 @@ git clone https://github.com/harshil1712/cloudflare-pdf-summarizer-workshop.git
 2. Install the dependencies
 
 ```bash
+cd cloudflare-pdf-summarizer-workshop
 npm install
 ```
 
@@ -70,7 +71,7 @@ Start the development server and navigate to [http://localhost:8787](http://loca
 </details>
 
 1. Add the binding to the `wrangler.toml` file.
-2. Update `worker-configuration.ts` with the R2 type.
+2. Update the types with the command `npm run cf-typegen`.
 3. Update the `/api/upload` endpoint in `src/index.ts` to handle file uploads.
 
 <details>
@@ -79,6 +80,12 @@ Start the development server and navigate to [http://localhost:8787](http://loca
 - Use the <a href="https://developers.cloudflare.com/r2/api/workers/workers-api-usage/">Workers API</a>
 
 </details>
+
+- To test this, start the development server:
+
+```bash
+npm run dev
+```
 
 ### Step 3: Create a Queue
 
@@ -104,11 +111,17 @@ You can do this on the [Cloudflare R2 dashboard](https://developers.cloudflare.c
 
 ### Step 5: Enable Workers AI
 
-1. Update the `wrangler.toml` file to add the Workers AI binding.
-2. Update the `handleWorkshopQueue` function in `src/index.ts` to use Wokres AI to summarize the content of the PDF file.
+1. Update the `wrangler.toml` file to add the Workers AI binding. Make sure to update the types.
+2. Update the `handleWorkshopQueue` function in `src/index.ts` to use Workers AI to summarize the content of the PDF file.
 3. Add the functionality to store the summary back in R2 as a text file.
 
 > For development purposes, use the `/api/mock` endpoint to simulate event notifications. Update `sampleMessages` with the name of the PDF file you uploaded to local instance of R2.
+
+- To test this, start the development server and make a `GET` request to `http://localhost:8787/api/mock`
+
+```bash
+npm run dev
+```
 
 ### Step 6: Handle event notifications
 
@@ -122,7 +135,7 @@ Deploy the application to Cloudflare Workers using the following command:
 npm run deploy
 ```
 
-Navigate to the deployed application and upload a PDF file. You should see the summary of the PDF file in the UI.
+Navigate to the deployed application and upload a PDF file. You should see the uploaded PDF file in the UI. If you refresh the page, you should see the summary file as file.
 
 ## Next Steps
 
