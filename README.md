@@ -2,7 +2,7 @@
 
 Get started with building applications on the Cloudflare platform. In this workshop, you'll learn how to build a simple web application and deploy it to the Cloudflare platform. You'll also learn how to use Cloudflare's developer tools to monitor and manage your application.
 
-The application allows users to upload a PDF file to Cloudflare R2. Once the file is uploaded, R2 will send a notification to Cloudflare Queues. Cloudflare Queues will then fetch the file from R2, extract the textual content, use AI to summarize the content, and store the summary back in Cloudflare R2 as a text file.
+You will build an application that allows users to upload a PDF file to Cloudflare R2. Once the file is uploaded, R2 will send a notification to Cloudflare Queues. Cloudflare Queues will then fetch the file from R2, extract the textual content, use AI to summarize the content, and store the summary back in Cloudflare R2 as a text file.
 
 ## Tech Stack
 - [Cloudflare Workers](https://developers.cloudflare.com/workers/)
@@ -71,13 +71,14 @@ Start the development server and navigate to [http://localhost:8787](http://loca
 </details>
 
 1. Add the binding to the `wrangler.toml` file.
-2. Update the types with the command `npm run cf-typegen`.
-3. Update the `/api/upload` endpoint in `src/index.ts` to handle file uploads.
+(The types are already configured for you. Check `worker-configuration.d.ts`.)
+1. Update the `/api/upload` endpoint in `src/index.ts` to handle file uploads.
+
 
 <details>
 <summary>Hint</summary>
 
-- Use the <a href="https://developers.cloudflare.com/r2/api/workers/workers-api-usage/">Workers API</a>
+- Use the <a href="https://developers.cloudflare.com/r2/api/workers/workers-api-usage/#4-access-your-r2-bucket-from-your-worker">Workers API</a>
 
 </details>
 
@@ -111,7 +112,7 @@ You can do this on the [Cloudflare R2 dashboard](https://developers.cloudflare.c
 
 ### Step 5: Enable Workers AI
 
-1. Update the `wrangler.toml` file to add the Workers AI binding. Make sure to update the types.
+1. Update the `wrangler.toml` file to add the Workers AI binding.
 2. Update the `handleWorkshopQueue` function in `src/index.ts` to use Workers AI to summarize the content of the PDF file.
 3. Add the functionality to store the summary back in R2 as a text file.
 
@@ -125,7 +126,7 @@ npm run dev
 
 ### Step 6: Handle event notifications
 
-Update the `queue` handler in `src/index.ts` to handle event notifications from the queue.
+Update the `queue` handler in `src/index.ts` to handle event notifications from the queue. Make sure to update the name of the queue.
 
 ### Step 7: Deploy the application
 
