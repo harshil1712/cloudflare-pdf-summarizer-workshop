@@ -182,3 +182,12 @@ Navigate to the deployed application and upload a PDF file. You should see the u
 - Instead of stroing the summary in R2, store it in a [Cloudflare D1](https://developers.cloudflare.com/d1/) database.
 - Create vector embeddings of the PDF file and store them in a [Vectorize](https://developers.cloudflare.com/vectorize/) to create searchable indexes.
 - Add a chat interface to allow users to ask questions about the PDF file.
+
+## Contact
+
+If you have any questions, or feedback feel free to open up a new issue on GitHub.
+
+Also, join the [Cloudflare Discord Server](https://discord.cloudflare.com) to interact with the community.
+
+You can also connect with [Harshil Agrawal](https://linkedin.com/in/harshil1712).
+
