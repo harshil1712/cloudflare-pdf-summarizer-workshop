@@ -12,12 +12,12 @@ compatibility_date = "2024-10-22"
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#r2-buckets
 # [[r2_buckets]]
 # binding = "MY_BUCKET"
-# bucket_name = "firstname-lastname-bucket"
+# bucket_name = "<firstname-lastname>-bucket"
 
 # Bind a Queue consumer. Queue Consumers can retrieve tasks scheduled by Producers to act on them.
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#queues
 # [[queues.consumers]]
-# queue = "firstname-lastname-queue"
+# queue = "<firstname-lastname>-queue"
 
 # Bind the Workers AI model catalog. Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#workers-ai

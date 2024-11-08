@@ -25,7 +25,7 @@ const sampleMessages: MessageBatch<QueueMessage> | any = {
         eventTime: "2024-11-08T12:33:45.296Z",
         action: "PutObject",
         object: {
-          key: "YOUR_FILE.pdf",
+          key: "Workshop PDF.pdf",
           size: 4384742,
           eTag: "some-etag",
         },
@@ -55,7 +55,7 @@ app.post("/api/upload", async (c) => {
   }
 
   try {
-    // Upload to R2
+    // TODO: Upload file to R2
 
     return c.json({ message: "File uploaded successfully" }, 201);
   } catch (error) {
@@ -96,16 +96,16 @@ const handleWorkshopQueue = async (
     const { text } = await extractText(document, { mergePages: true });
     console.log(`Extracted text: ${text.substring(0, 50)}...`);
 
-    // Implement Workers AI to generate a summary
+    // TODO: Implement Workers AI to generate a summary
     const result: AiSummarizationOutput = {
       summary: "Summary of the document",
     };
     const summary = result.summary;
     console.log(`Summary: ${summary.substring(0, 100)}...`);
 
-    // Store the summary in R2
     try {
-      // console.log(`Summary added to the R2 bucket: ${upload.key}`);
+      // TODO: Create a new objectKey-summary.txt file and store it in R2
+
       return { message: "Summary added to the R2 bucket" };
     } catch (error) {
       console.error(`Error uploading summary to R2 bucket: ${error}`);
@@ -118,8 +118,9 @@ export default {
   queue: async (batch: MessageBatch<QueueMessage>, env: CloudflareBindings) => {
     // Handle multiple queues. Add more cases for other queues
     switch (batch.queue) {
+      // TODO: Update the queue name
       case "your-queue":
-        // Handle the incoming batch
+        // TODO: Handle the incoming batch
         break;
       default:
         console.error("Unknown Queue");
